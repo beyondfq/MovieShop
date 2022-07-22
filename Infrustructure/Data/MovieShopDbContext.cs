@@ -17,10 +17,19 @@ namespace Infrustructure.Data
         }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<Trailer> Trailers { get; set; }
+        public DbSet<MovieGenre> movieGenres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>(ConfigureMovie);
+            modelBuilder.Entity<MovieGenre>(ConfigureMovieGenre);
+        }
+
+        private void ConfigureMovieGenre(EntityTypeBuilder<MovieGenre> builder)
+        {
+            builder.ToTable("MovieGenres");
+            builder.HasKey(mg => new { mg.MovieId, mg.GenreId });
         }
 
         private void ConfigureMovie(EntityTypeBuilder<Movie> builder)
