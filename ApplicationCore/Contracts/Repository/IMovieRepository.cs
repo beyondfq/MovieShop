@@ -14,3 +14,4 @@ namespace ApplicationCore.Contracts.Repository
         Movie GetById(int id);
     }
 }
+
