@@ -20,8 +20,7 @@ namespace Infrustructure.Services
 
        public List<MovieCardModel> GetTopRevenueMovies()
         {
-            var movieRepository = new MovieRepository();
-            var movies = movieRepository.GetTop30HighestRevenueMovies();
+            var movies = _movieRepository.GetTop30HighestRevenueMovies();
 
             var movieCards = new List<MovieCardModel>();
             foreach (var movie in movies)

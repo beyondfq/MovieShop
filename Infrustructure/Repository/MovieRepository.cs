@@ -11,6 +11,12 @@ namespace Infrustructure.Repository
 {
     public class MovieRepository: IMovieRepository
     {
+        private readonly MovieShopDbContext _movieShopDbContext;
+        public MovieRepository(MovieShopDbContext movieShopDbContext)
+        {
+            _movieShopDbContext = movieShopDbContext;
+        }
+
         public Movie GetById(int id)
         {
             throw new NotImplementedException();
@@ -18,21 +24,9 @@ namespace Infrustructure.Repository
 
         public List<Movie> GetTop30HighestRevenueMovies()
         {
-            var movies = new List<Movie>
-            {
-                new Movie { Id = 1, Title = "Avengers: Infinity War", Budget = 1200000},
-                new Movie { Id = 2, Title = "Avengers: Infinity War", Budget = 1200000},
-                new Movie { Id = 3, Title = "Avengers: Infinity War", Budget = 1200000},
-                new Movie { Id = 4, Title = "Avengers: Infinity War", Budget = 1200000},
-                new Movie { Id = 5, Title = "Avengers: Infinity War", Budget = 1200000},
-                new Movie { Id = 6, Title = "Avengers: Infinity War", Budget = 1200000},
-                new Movie { Id = 7, Title = "Avengers: Infinity War", Budget = 1200000},
-                new Movie { Id = 8, Title = "Avengers: Infinity War", Budget = 1200000},
-                new Movie { Id = 9, Title = "Avengers: Infinity War", Budget = 1200000},
-                new Movie { Id = 10, Title = "Avengers: Infinity War", Budget = 1200000}
-
-            };
-
+            // Call the database with EF Core and get the data
+            // use MovieShopDbContext and Movies DbSet
+            var movies = _movieShopDbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToList();
             return movies;
         }
 
