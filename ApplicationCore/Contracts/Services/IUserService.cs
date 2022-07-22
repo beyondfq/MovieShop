@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Contracts.Services
 {
-    public class IUserService
+    public interface IUserService
     {
     }
 }
