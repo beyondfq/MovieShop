@@ -27,12 +27,53 @@
                 <br><br><br><br>
                 <div class="row" style="margin-left:15px;margin-right:15px">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-light">
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#reviewModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z" />
                             <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z" />
                         </svg> REVIEW
                     </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reviewModalLabel">REVIEW</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Choose your score
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item" href="#">1</a></li>
+                                            <li><a class="dropdown-item" href="#">2</a></li>
+                                            <li><a class="dropdown-item" href="#">3</a></li>
+                                            <li><a class="dropdown-item" href="#">4</a></li>
+                                            <li><a class="dropdown-item" href="#">5</a></li>
+                                            <li><a class="dropdown-item" href="#">6</a></li>
+                                            <li><a class="dropdown-item" href="#">7</a></li>
+                                            <li><a class="dropdown-item" href="#">8</a></li>
+                                            <li><a class="dropdown-item" href="#">9</a></li>
+                                            <li><a class="dropdown-item" href="#">10</a></li>
+                                        </ul>
+                                    </div>
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="message-text" class="col-form-label">Review:</label>
+                                            <textarea class="form-control" id="message-text"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <br>
@@ -43,7 +84,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="ConfirmationModalLabel">Confirmation</h5>
+                                    <h5 class="modal-title" id="ConfirmationModalLabel">CONFIRMATION</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
