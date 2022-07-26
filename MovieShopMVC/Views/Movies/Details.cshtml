@@ -34,71 +34,12 @@
                         </svg> REVIEW
                     </button>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="reviewModalLabel">REVIEW</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Choose your score
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item" href="#">1</a></li>
-                                            <li><a class="dropdown-item" href="#">2</a></li>
-                                            <li><a class="dropdown-item" href="#">3</a></li>
-                                            <li><a class="dropdown-item" href="#">4</a></li>
-                                            <li><a class="dropdown-item" href="#">5</a></li>
-                                            <li><a class="dropdown-item" href="#">6</a></li>
-                                            <li><a class="dropdown-item" href="#">7</a></li>
-                                            <li><a class="dropdown-item" href="#">8</a></li>
-                                            <li><a class="dropdown-item" href="#">9</a></li>
-                                            <li><a class="dropdown-item" href="#">10</a></li>
-                                        </ul>
-                                    </div>
-                                    <form>
-                                        <div class="mb-3">
-                                            <label for="message-text" class="col-form-label">Review:</label>
-                                            <textarea class="form-control" id="message-text"></textarea>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 <br>
                 <div class="row" style="margin-left:15px;margin-right:15px">
                     <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#purchaseModal">BUY $@Model.Price</button>
                     <!-- Modal -->
-                    <div class="modal fade" id="purchaseModal" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="ConfirmationModalLabel">CONFIRMATION</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <h4>Please confirm your purchase</h4>
-                                    <h6>@Model.Title</h6>
-                                    <h6>@Model.Price</h6>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -186,6 +127,67 @@
                 </li>
             </ul>
         }
+    </div>
+</div>
+
+<div class="modal fade" id="purchaseModal" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ConfirmationModalLabel">CONFIRMATION</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Please confirm your purchase</h4>
+                <h6>@Model.Title</h6>
+                <h6>@Model.Price</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">REVIEW</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Choose your score
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">1</a></li>
+                        <li><a class="dropdown-item" href="#">2</a></li>
+                        <li><a class="dropdown-item" href="#">3</a></li>
+                        <li><a class="dropdown-item" href="#">4</a></li>
+                        <li><a class="dropdown-item" href="#">5</a></li>
+                        <li><a class="dropdown-item" href="#">6</a></li>
+                        <li><a class="dropdown-item" href="#">7</a></li>
+                        <li><a class="dropdown-item" href="#">8</a></li>
+                        <li><a class="dropdown-item" href="#">9</a></li>
+                        <li><a class="dropdown-item" href="#">10</a></li>
+                    </ul>
+                </div>
+                <form>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Review:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
     </div>
 </div>
 
