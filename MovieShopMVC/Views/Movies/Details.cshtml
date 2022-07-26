@@ -38,8 +38,6 @@
                 <br>
                 <div class="row" style="margin-left:15px;margin-right:15px">
                     <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#purchaseModal">BUY $@Model.Price</button>
-                    <!-- Modal -->
-
                 </div>
             </div>
 
@@ -130,27 +128,27 @@
     </div>
 </div>
 
+<!-- Modal BUY-->
 <div class="modal fade" id="purchaseModal" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ConfirmationModalLabel">CONFIRMATION</h5>
+                <h5 class="modal-title" id="ConfirmationModalLabel">Please confirm your purchase</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h4>Please confirm your purchase</h4>
-                <h6>@Model.Title</h6>
-                <h6>@Model.Price</h6>
+                <h5>@Model.Title</h5>
+                <h5>$@Model.Price</h5>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary">Purchase</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal REVIEW-->
 <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
