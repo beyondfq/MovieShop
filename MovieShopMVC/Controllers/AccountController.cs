@@ -25,7 +25,7 @@ namespace MovieShopMVC.Controllers
         {
             // service, hash the password and save in database
             var user = await _accountService.CreateUser(model);
-            return View();
+            return RedirectToAction("Login");
         }
 
         [HttpGet]
@@ -37,7 +37,12 @@ namespace MovieShopMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserLoginModel model)
         {
-            return View(model);
+            var user = await _accountService.ValidateUser(model);
+            if (user == false)
+            {
+                return View(model);
+            }
+            return LocalRedirect("~/");
         }
     }
 }
