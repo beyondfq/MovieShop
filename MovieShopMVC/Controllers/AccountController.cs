@@ -31,6 +31,12 @@ namespace MovieShopMVC.Controllers
             return RedirectToAction("Login");
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
