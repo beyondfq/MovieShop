@@ -1,5 +1,5 @@
 ﻿using ApplicationCore.Contracts.Services;
-using Infrustructure.Services;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using MovieShopMVC.Models;
 using System.Diagnostics;

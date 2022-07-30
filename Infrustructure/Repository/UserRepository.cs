@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Contracts.Repository;
 using ApplicationCore.Entities;
-using Infrustructure.Data;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrustructure.Repository
+namespace Infrastructure.Repository
 {
     public class UserRepository : IUserRepository
     {

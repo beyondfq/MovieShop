@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrustructure.Repository
+namespace Infrastructure.Repository
 {
-    public class ReportRepository: IReportRepository
+    public class ReportRepository : IReportRepository
     {
     }
 }

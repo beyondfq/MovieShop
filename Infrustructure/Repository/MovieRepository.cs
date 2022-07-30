@@ -1,6 +1,5 @@
 ﻿using ApplicationCore.Contracts.Repository;
 using ApplicationCore.Entities;
-using Infrustructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ApplicationCore.Models;
+using Infrastructure.Data;
 
-namespace Infrustructure.Repository
+namespace Infrastructure.Repository
 {
-    public class MovieRepository: IMovieRepository
+    public class MovieRepository : IMovieRepository
     {
         private readonly MovieShopDbContext _movieShopDbContext;
         public MovieRepository(MovieShopDbContext movieShopDbContext)
@@ -25,7 +25,7 @@ namespace Infrustructure.Repository
             var movieDetails = await _movieShopDbContext.Movies
                 .Include(m => m.GenresOfMovie).ThenInclude(m => m.Genre)
                 .Include(m => m.CastsOfMovie).ThenInclude(m => m.Cast)
-                .Include(m=> m.Trailers)
+                .Include(m => m.Trailers)
                 .FirstOrDefaultAsync(m => m.Id == id);
             return movieDetails;
         }

@@ -1,11 +1,11 @@
 using ApplicationCore.Contracts.Repository;
 using ApplicationCore.Contracts.Services;
-using Infrustructure.Data;
-using Infrustructure.Repository;
-using Infrustructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MovieShopMVC.Infra;
+using Infrastructure.Services;
+using Infrastructure.Data;
+using Infrastructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +21,10 @@ builder.Services.AddScoped<ICastService, CastService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+
+
 
 builder.Services.AddHttpContextAccessor();
 

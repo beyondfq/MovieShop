@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrustructure.Data
+namespace Infrastructure.Data
 {
-    public class MovieShopDbContext: DbContext
+    public class MovieShopDbContext : DbContext
     {
-        public MovieShopDbContext(DbContextOptions<MovieShopDbContext> options): base(options)
+        public MovieShopDbContext(DbContextOptions<MovieShopDbContext> options) : base(options)
         {
 
         }
@@ -25,6 +25,7 @@ namespace Infrustructure.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +38,14 @@ namespace Infrustructure.Data
             modelBuilder.Entity<UserRole>(ConfigureUserRole);
             modelBuilder.Entity<Review>(ConfigureReview);
             modelBuilder.Entity<Favorite>(ConfigureFavorite);
+            modelBuilder.Entity<Purchase>(ConfigurePurchase);
+        }
+
+        private void ConfigurePurchase(EntityTypeBuilder<Purchase> builder)
+        {
+            builder.HasKey(p => new { p.UserId, p.MovieId });
+            builder.Property(p => p.PurchaseNumber).ValueGeneratedOnAdd();
+            builder.Property(p => p.TotalPrice).HasColumnType("decimal(5, 2)");
         }
 
         private void ConfigureFavorite(EntityTypeBuilder<Favorite> builder)
@@ -53,11 +62,10 @@ namespace Infrustructure.Data
             builder.Property(r => r.CreatedDate).HasDefaultValueSql("getdate()");
         }
 
-
         private void ConfigureUserRole(EntityTypeBuilder<UserRole> builder)
         {
             builder.ToTable("UserRoles");
-            builder.HasKey(x => new {x.RoleId, x.UserId});
+            builder.HasKey(x => new { x.RoleId, x.UserId });
         }
 
         private void ConfigureRole(EntityTypeBuilder<Role> builder)
@@ -87,7 +95,7 @@ namespace Infrustructure.Data
         private void ConfigureCast(EntityTypeBuilder<Cast> builder)
         {
             builder.Property(c => c.Name).HasMaxLength(128);
-            builder.Property(c => c.Gender).HasMaxLength(16); 
+            builder.Property(c => c.Gender).HasMaxLength(16);
             builder.Property(c => c.ProfilePath).HasMaxLength(2084);
             builder.Property(c => c.TmdbUrl).HasMaxLength(2084);
 

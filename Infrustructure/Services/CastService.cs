@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrustructure.Services
+namespace Infrastructure.Services
 {
-    public class CastService: ICastService
+    public class CastService : ICastService
     {
         private readonly ICastRepository _castRepository;
 
@@ -29,7 +29,7 @@ namespace Infrustructure.Services
             var castDetails = new CastModel
             {
                 Id = cast.Id,
-                Name =  cast.Name,
+                Name = cast.Name,
                 ProfilePath = cast.ProfilePath,
                 Gender = gender
             };

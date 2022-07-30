@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrustructure.Services
+namespace Infrastructure.Services
 {
     public class GenreService : IGenreService
     {
@@ -22,7 +22,7 @@ namespace Infrustructure.Services
         {
             var genres = await _genreRepository.GetAllGenres();
 
-            var genresModels = genres.Select(g => new GenreModel { Id = g.Id, Name = g.Name }).ToList() ;
+            var genresModels = genres.Select(g => new GenreModel { Id = g.Id, Name = g.Name }).ToList();
 
             return genresModels;
         }

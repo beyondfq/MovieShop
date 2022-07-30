@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrustructure.Services
+namespace Infrastructure.Services
 {
-    public class AdminService: IAdminService
+    public class AdminService : IAdminService
     {
     }
 }

@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Infrustructure.Repository;
+using Infrastructure.Repository;
 
-namespace Infrustructure.Services
+namespace Infrastructure.Services
 {
-    public class MovieService: IMovieService
+    public class MovieService : IMovieService
     {
         private readonly IMovieRepository _movieRepository;
         public MovieService(IMovieRepository movieRepository)

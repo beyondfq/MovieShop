@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using ApplicationCore.Entities;
 using System.Security.Cryptography;
 
-namespace Infrustructure.Services
+namespace Infrastructure.Services
 {
     public class AccountService : IAccountService
     {
-        
+
         private readonly IUserRepository _UserRepository;
         public AccountService(IUserRepository userRepository)
         {
@@ -86,7 +86,7 @@ namespace Infrustructure.Services
 
             if (hashedPassword == dbUser.HashedPassword)
             {
-                return new UserInfoResponseModel {Id = dbUser.Id, Email = dbUser.Email, FirstName = dbUser.FirstName, LastName = dbUser.LastName };
+                return new UserInfoResponseModel { Id = dbUser.Id, Email = dbUser.Email, FirstName = dbUser.FirstName, LastName = dbUser.LastName };
             }
             return null;
         }

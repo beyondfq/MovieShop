@@ -1,14 +1,14 @@
 ﻿using ApplicationCore.Contracts.Repository;
 using ApplicationCore.Entities;
-using Infrustructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Data;
 
-namespace Infrustructure.Repository
+namespace Infrastructure.Repository
 {
     public class GenreRepository : IGenreRepository
     {
