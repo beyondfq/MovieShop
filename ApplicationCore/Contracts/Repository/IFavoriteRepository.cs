@@ -11,6 +11,7 @@ namespace ApplicationCore.Contracts.Repository
     {
         Task<List<Favorite>> GetById(int userId);
         Task<Favorite> FavoriteAdd(Favorite favorite);
+        Task<Favorite> FavoriteRemove(Favorite favorite);
         Task<bool> CheckIfFavoriteExists(int userId, int movieId);
     }
 }

@@ -82,5 +82,19 @@ namespace MovieShopMVC.Controllers
             await _userService.AddFavorite(model);
             return RedirectToAction("Details", "Movies", new { id = movieId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveFavorite(int movieId)
+        {
+            var userId = _currentUser.UserId;
+            FavoriteRequestModel model = new FavoriteRequestModel
+            {
+                MovieId = movieId,
+                UserId = userId
+            };
+
+            await _userService.RemoveFavorite(model);
+            return RedirectToAction("Details", "Movies", new { id = movieId });
+        }
     }
 }

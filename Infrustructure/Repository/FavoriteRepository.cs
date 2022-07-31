@@ -24,6 +24,12 @@ namespace Infrastructure.Repository
             await _movieShopDbContext.SaveChangesAsync();
             return favorite;
         }
+        public async Task<Favorite> FavoriteRemove(Favorite favorite)
+        {
+            _movieShopDbContext.Favorite.Remove(favorite);
+            await _movieShopDbContext.SaveChangesAsync();
+            return favorite;
+        }
 
         public async Task<bool> CheckIfFavoriteExists(int userId, int movieId)
         {
@@ -41,5 +47,6 @@ namespace Infrastructure.Repository
                 .ToListAsync();
             return favorites;
         }
+
     }
 }

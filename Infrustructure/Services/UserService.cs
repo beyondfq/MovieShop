@@ -41,6 +41,18 @@ namespace Infrastructure.Services
             return true;
         }
 
+        public async Task<bool> RemoveFavorite(FavoriteRequestModel favoriteRequest)
+        {
+            var delFavorite = new Favorite
+            {
+                MovieId = favoriteRequest.MovieId,
+                UserId = favoriteRequest.UserId
+            };
+
+            await _favoriteRepository.FavoriteRemove(delFavorite);
+            return true;
+        }
+
         public async Task<bool> PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId)
         {
             var newPurchase = new Purchase
@@ -60,17 +72,6 @@ namespace Infrastructure.Services
             return false;
         }
 
-        public async Task<List<MovieCardModel>> GetAllFavoritesForUser(int id)
-        {
-            var favorites = await _favoriteRepository.GetById(id);
-            var movieCards = new List<MovieCardModel>();
-            foreach (var favorite in favorites)
-            {
-                movieCards.Add(new MovieCardModel { Id = favorite.MovieId, PosterUrl = favorite.Movie.PosterUrl, Title = favorite.Movie.Title });
-            }
-            return movieCards;
-        }
-
         public async Task<List<MovieCardModel>> GetAllPurchasesForUser(int id)
         {
             var purchases = await _purchaseRepository.GetById(id);
@@ -87,5 +88,16 @@ namespace Infrastructure.Services
             throw new NotImplementedException();
         }
 
+
+        public async Task<List<MovieCardModel>> GetAllFavoritesForUser(int id)
+        {
+            var favorites = await _favoriteRepository.GetById(id);
+            var movieCards = new List<MovieCardModel>();
+            foreach (var favorite in favorites)
+            {
+                movieCards.Add(new MovieCardModel { Id = favorite.MovieId, PosterUrl = favorite.Movie.PosterUrl, Title = favorite.Movie.Title });
+            }
+            return movieCards;
+        }
     }
 }
