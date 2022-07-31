@@ -14,11 +14,13 @@ namespace Infrastructure.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IPurchaseRepository _purchaseRepository;
+        private readonly IFavoriteRepository _favoriteRepository;
 
-        public UserService(IPurchaseRepository purchaseRepository, IUserRepository userRepository)
+        public UserService(IPurchaseRepository purchaseRepository, IUserRepository userRepository, IFavoriteRepository favoriteRepository)
         {
             _purchaseRepository = purchaseRepository;
             _userRepository = userRepository;
+            _favoriteRepository = favoriteRepository;
         }
 
         public async Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId)
@@ -26,6 +28,17 @@ namespace Infrastructure.Services
             if (await _purchaseRepository.CheckIfPurchaseExists(userId, purchaseRequest.MovieId))
                 return true;
             return false;
+        }
+        public async Task<bool> AddFavorite(FavoriteRequestModel favoriteRequest)
+        {
+            var newFavorite = new Favorite
+            {
+                MovieId = favoriteRequest.MovieId,
+                UserId = favoriteRequest.UserId
+            };
+
+            await _favoriteRepository.FavoriteAdd(newFavorite);
+            return true;
         }
 
         public async Task<bool> PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId)
@@ -47,6 +60,17 @@ namespace Infrastructure.Services
             return false;
         }
 
+        public async Task<List<MovieCardModel>> GetAllFavoritesForUser(int id)
+        {
+            var favorites = await _favoriteRepository.GetById(id);
+            var movieCards = new List<MovieCardModel>();
+            foreach (var favorite in favorites)
+            {
+                movieCards.Add(new MovieCardModel { Id = favorite.MovieId, PosterUrl = favorite.Movie.PosterUrl, Title = favorite.Movie.Title });
+            }
+            return movieCards;
+        }
+
         public async Task<List<MovieCardModel>> GetAllPurchasesForUser(int id)
         {
             var purchases = await _purchaseRepository.GetById(id);
@@ -62,5 +86,6 @@ namespace Infrastructure.Services
         {
             throw new NotImplementedException();
         }
+
     }
 }

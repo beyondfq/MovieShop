@@ -26,6 +26,7 @@ namespace Infrastructure.Data
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Favorite> Favorite { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
