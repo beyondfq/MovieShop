@@ -15,12 +15,14 @@ namespace Infrastructure.Services
         private readonly IUserRepository _userRepository;
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly IFavoriteRepository _favoriteRepository;
+        private readonly IReviewRepository _reviewRepository;
 
-        public UserService(IPurchaseRepository purchaseRepository, IUserRepository userRepository, IFavoriteRepository favoriteRepository)
+        public UserService(IPurchaseRepository purchaseRepository, IUserRepository userRepository, IFavoriteRepository favoriteRepository, IReviewRepository reviewRepository)
         {
             _purchaseRepository = purchaseRepository;
             _userRepository = userRepository;
             _favoriteRepository = favoriteRepository;
+            _reviewRepository = reviewRepository;
         }
 
         public async Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId)
@@ -29,6 +31,21 @@ namespace Infrastructure.Services
                 return true;
             return false;
         }
+
+        public async Task<bool> AddMovieReview(ReviewRequestModel reviewRequest)
+        {
+            var newReview = new Review
+            {
+                MovieId = reviewRequest.MovieId,
+                UserId = reviewRequest.UserId,
+                Rating = reviewRequest.Rating,
+                ReviewText = reviewRequest.ReviewText
+            };
+
+            var savedReview = await _reviewRepository.ReviewAdd(newReview);
+            return true;
+        }
+
         public async Task<bool> AddFavorite(FavoriteRequestModel favoriteRequest)
         {
             var newFavorite = new Favorite
@@ -98,6 +115,52 @@ namespace Infrastructure.Services
                 movieCards.Add(new MovieCardModel { Id = favorite.MovieId, PosterUrl = favorite.Movie.PosterUrl, Title = favorite.Movie.Title });
             }
             return movieCards;
+        }
+
+        public async Task<bool> DeleteMovieReview(int userId, int movieId)
+        {
+            var DelReview = await _reviewRepository.ReviewRemove(new Review { UserId = userId, MovieId = movieId });
+            if (DelReview.UserId > 0)
+                return true;
+            return false;
+        }
+
+        public async Task<bool> UpdateMovieReview(ReviewRequestModel reviewRequest)
+        {
+            var UpdatedReview = new Review
+            {
+                MovieId = reviewRequest.MovieId,
+                UserId = reviewRequest.UserId,
+                Rating = reviewRequest.Rating,
+                ReviewText = reviewRequest.ReviewText
+            };
+
+            var saved = await _reviewRepository.ReviewUpdate(UpdatedReview);
+            if (saved.UserId != null)
+                return true;
+            return false;
+        }
+
+        public Task<List<ReviewModel>> GetAllReviewsByUser(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ReviewRequestModel> GetReview(int userId, int movieId)
+        {
+            var review = await _reviewRepository.GetById(userId, movieId);
+            if(review == null)
+                return new ReviewRequestModel { Rating = 0, ReviewText = "" };
+
+            var model = new ReviewRequestModel
+            {
+                MovieId = review.MovieId,
+                UserId = review.UserId,
+                Rating = review.Rating,
+                ReviewText = review.ReviewText
+            };
+
+            return model;
         }
     }
 }

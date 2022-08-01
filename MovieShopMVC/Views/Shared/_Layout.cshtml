@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using ApplicationCore.Contracts.Services
+@inject IGenreService genreService
+@{
+    var genreList = await genreService.GetAllGenres();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,10 +31,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown">Genres</a>
+                            <ul class="dropdown-menu">
+                                @foreach (var genre in genreList)
+                                {
+                                <li><a class="dropdown-item" asp-controller="Movies" asp-action="MoviesByGenre" asp-route-id="@genre.Id">@genre.Name</a></li>
+                                }
+                            </ul>
+                        </li>
                     </ul>
-
-                    <partial name="_LoginInfoPartial"/>
-                
+                    <partial name="_LoginInfoPartial" />
                 </div>
             </div>
         </nav>

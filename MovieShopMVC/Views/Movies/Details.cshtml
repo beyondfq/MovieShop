@@ -3,6 +3,7 @@
 @using MovieShopMVC.Infra
 @inject IPurchaseRepository purchaseRepository
 @inject IFavoriteRepository favoriteRepository
+@inject IReviewRepository reviewRepository
 @inject ICurrentUser currentUser
 
 <div class="row">
@@ -214,7 +215,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Submit</button>
+                @*<button type="button" class="btn btn-primary">Submit</button>*@
+                <a asp-controller="User" asp-action="AddReview" asp-route-movieId="@Model.Id" class="btn btn-primary" role="button">Submit</a>
             </div>
         </div>
     </div>
