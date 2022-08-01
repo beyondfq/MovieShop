@@ -21,8 +21,6 @@ namespace MovieShopMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Purchases()
         {
-            // get all the movies purchased by user, user id
-            // httpcontext.user.claims and then call the database and get the information to the view
             var userId = _currentUser.UserId;
             var movies = await _userService.GetAllPurchasesForUser(userId);
             return View(movies);
@@ -121,5 +119,13 @@ namespace MovieShopMVC.Controllers
 
             return RedirectToAction("Details", "Movies", new { movieId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteReview(ReviewRequestModel model)
+        {
+            await _userService.DeleteMovieReview(model);
+            return RedirectToAction("Details", "Movies", new {id = model.MovieId});
+        }
+
     }
 }

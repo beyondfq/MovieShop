@@ -1,0 +1,40 @@
+﻿@model ApplicationCore.Models.ReviewRequestModel
+@using ApplicationCore.Contracts.Services
+@using MovieShopMVC.Infra
+@inject ICurrentUser currentUser
+@inject IUserService userService
+
+
+<!-- Modal REVIEW-->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">REVIEW</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="User" asp-action="AddReview" class="form-inline">
+                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> Choose your score </label>
+                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                        <option selected>Choose...</option>
+                        @for (int i = 1; i < 11; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </form>
+                <form>
+                    <div class="mb-3">
+                        <label class="col-form-label">Review:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a class="btn btn-primary" role="button">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>

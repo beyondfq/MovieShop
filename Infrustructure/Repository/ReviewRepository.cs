@@ -28,20 +28,26 @@ namespace Infrastructure.Repository
         {
             var review = await _movieShopDbContext.Reviews
                 .Where(r => r.UserId == userId && r.MovieId == movieId)
+                .Include( r=> r.Movie)
                 .FirstOrDefaultAsync();
             return review;
         }
 
-        public Task<Review> ReviewRemove(Review review)
+        public async Task<Review> ReviewRemove(Review review)
         {
-            throw new NotImplementedException();
+            _movieShopDbContext.Reviews.Remove(review);
+            await _movieShopDbContext.SaveChangesAsync();
+            return review;
         }
 
         public async Task<Review> ReviewUpdate(Review review)
         {
-            _movieShopDbContext.Reviews.Add(review);
+            var UpdatedReview = await GetById(review.UserId, review.MovieId);
+            UpdatedReview.Rating = review.Rating;
+            UpdatedReview.ReviewText = review.ReviewText;
+            UpdatedReview.CreatedDate = review.CreatedDate;
             await _movieShopDbContext.SaveChangesAsync();
-            return review;
+            return UpdatedReview;
         }
 
         public async Task<Review> ReviewAdd(Review review)

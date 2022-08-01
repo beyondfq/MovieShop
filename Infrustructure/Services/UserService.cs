@@ -39,10 +39,11 @@ namespace Infrastructure.Services
                 MovieId = reviewRequest.MovieId,
                 UserId = reviewRequest.UserId,
                 Rating = reviewRequest.Rating,
-                ReviewText = reviewRequest.ReviewText
+                ReviewText = reviewRequest.ReviewText,
+                CreatedDate = reviewRequest.CreatedDate
             };
 
-            var savedReview = await _reviewRepository.ReviewAdd(newReview);
+            await _reviewRepository.ReviewAdd(newReview);
             return true;
         }
 
@@ -117,12 +118,11 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
-        public async Task<bool> DeleteMovieReview(int userId, int movieId)
+        public async Task<bool> DeleteMovieReview(ReviewRequestModel reviewRequest)
         {
-            var DelReview = await _reviewRepository.ReviewRemove(new Review { UserId = userId, MovieId = movieId });
-            if (DelReview.UserId > 0)
-                return true;
-            return false;
+            var review = await _reviewRepository.GetById(reviewRequest.MovieId, reviewRequest.UserId);
+            await _reviewRepository.ReviewRemove(review);
+            return true;
         }
 
         public async Task<bool> UpdateMovieReview(ReviewRequestModel reviewRequest)
@@ -132,13 +132,12 @@ namespace Infrastructure.Services
                 MovieId = reviewRequest.MovieId,
                 UserId = reviewRequest.UserId,
                 Rating = reviewRequest.Rating,
-                ReviewText = reviewRequest.ReviewText
+                ReviewText = reviewRequest.ReviewText,
+                CreatedDate = reviewRequest.CreatedDate
             };
 
-            var saved = await _reviewRepository.ReviewUpdate(UpdatedReview);
-            if (saved.UserId != null)
-                return true;
-            return false;
+            await _reviewRepository.ReviewUpdate(UpdatedReview);
+            return true;
         }
 
         public Task<List<ReviewModel>> GetAllReviewsByUser(int id)
@@ -146,21 +145,21 @@ namespace Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ReviewRequestModel> GetReview(int userId, int movieId)
+        public async Task<ReviewModel> GetReview(int userId, int movieId)
         {
             var review = await _reviewRepository.GetById(userId, movieId);
-            if(review == null)
-                return new ReviewRequestModel { Rating = 0, ReviewText = "" };
 
-            var model = new ReviewRequestModel
+            var model = new ReviewModel
             {
                 MovieId = review.MovieId,
                 UserId = review.UserId,
                 Rating = review.Rating,
-                ReviewText = review.ReviewText
+                ReviewText = review.ReviewText,
+                CreatedDate = review.CreatedDate
             };
 
             return model;
         }
+
     }
 }

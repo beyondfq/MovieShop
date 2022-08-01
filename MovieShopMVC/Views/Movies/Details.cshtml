@@ -1,6 +1,7 @@
 ﻿@model ApplicationCore.Models.MovieDetailsModel
 @using ApplicationCore.Contracts.Repository
 @using MovieShopMVC.Infra
+@using ApplicationCore.Models
 @inject IPurchaseRepository purchaseRepository
 @inject IFavoriteRepository favoriteRepository
 @inject IReviewRepository reviewRepository
@@ -38,6 +39,14 @@
                             <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z" />
                         </svg> REVIEW
                     </button>
+
+                    @{
+                        ReviewRequestModel reviewRequest = new ReviewRequestModel
+                        {
+                            MovieId = Model.Id,
+                        };
+                    }
+                    @*<partial name="_ReviewPartial" model="@reviewRequest" />*@
 
                 </div>
                 <br>
@@ -189,39 +198,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Choose your score
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">1</a></li>
-                        <li><a class="dropdown-item" href="#">2</a></li>
-                        <li><a class="dropdown-item" href="#">3</a></li>
-                        <li><a class="dropdown-item" href="#">4</a></li>
-                        <li><a class="dropdown-item" href="#">5</a></li>
-                        <li><a class="dropdown-item" href="#">6</a></li>
-                        <li><a class="dropdown-item" href="#">7</a></li>
-                        <li><a class="dropdown-item" href="#">8</a></li>
-                        <li><a class="dropdown-item" href="#">9</a></li>
-                        <li><a class="dropdown-item" href="#">10</a></li>
-                    </ul>
-                </div>
+                <form asp-controller="User" asp-action="AddReview" class="form-inline">
+                    <label asp-for="@reviewRequest.Rating" class="my-1 mr-2" for="inlineFormCustomSelectPref"> Choose your score </label>
+                    <select asp-for="@reviewRequest.Rating" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                        <option selected>Choose...</option>
+                        @for (int i = 1; i < 11; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </form>
                 <form>
                     <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Review:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <label asp-for="@reviewRequest.ReviewText" class="col-form-label">Review:</label>
+                        <textarea asp-for="@reviewRequest.ReviewText" class="form-control" id="message-text"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                @*<button type="button" class="btn btn-primary">Submit</button>*@
-                <a asp-controller="User" asp-action="AddReview" asp-route-movieId="@Model.Id" class="btn btn-primary" role="button">Submit</a>
+                <a class="btn btn-primary" role="button">Submit</a>
             </div>
         </div>
     </div>
 </div>
-
 
 
 

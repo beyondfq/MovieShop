@@ -12,5 +12,6 @@ namespace ApplicationCore.Models
         public int UserId { get; set; }
         public decimal Rating { get; set; }
         public string ReviewText { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
