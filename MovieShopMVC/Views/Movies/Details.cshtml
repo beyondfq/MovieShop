@@ -34,9 +34,9 @@
                 <div class="row" style="margin-left:15px;margin-right:15px">
                     @{
                         ReviewRequestModel reviewRequest = new ReviewRequestModel
-                            {
-                                MovieId = Model.Id,
-                            };
+            {
+                MovieId = Model.Id,
+            };
                     }
                     @if (currentUser.IsAuthenticated)
                     {
@@ -228,15 +228,20 @@
     </div>
 </div>
 
- @if (await reviewRepository.CheckIfReviewExists(currentUser.UserId, Model.Id))
-{
-    <partial name="_UpdateReviewPartial" model="@reviewRequest"/>
-}
-else
-{
-    <partial name="_AddReviewPartial" model="@reviewRequest"/>
 
+@if (currentUser.IsAuthenticated)
+{
+    @if (await reviewRepository.CheckIfReviewExists(currentUser.UserId, Model.Id))
+    {
+        <partial name="_UpdateReviewPartial" model="@reviewRequest" />
+    }
+    else
+    {
+        <partial name="_AddReviewPartial" model="@reviewRequest" />
+    }
 }
+
+
 
 
 
