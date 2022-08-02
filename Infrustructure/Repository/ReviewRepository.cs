@@ -19,9 +19,12 @@ namespace Infrastructure.Repository
             _movieShopDbContext = movieShopDbContext;
         }
 
-        public Task<bool> CheckIfReviewExists(int userId, int movieId)
+        public async Task<bool> CheckIfReviewExists(int userId, int movieId)
         {
-            throw new NotImplementedException();
+            var review = await _movieShopDbContext.Reviews
+                .Where(r => r.UserId == userId && r.MovieId == movieId)
+                .FirstOrDefaultAsync();
+            return review != null;
         }
 
         public async Task<Review> GetById(int userId, int movieId)

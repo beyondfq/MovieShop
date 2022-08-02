@@ -1,0 +1,69 @@
+﻿@model ApplicationCore.Models.ReviewRequestModel
+@using ApplicationCore.Contracts.Services
+@using MovieShopMVC.Infra
+@inject ICurrentUser currentUser
+@inject IUserService userService
+
+@{
+    var review = await userService.GetReview(currentUser.UserId, Model.MovieId);
+}
+
+<!-- Modal Update REVIEW-->
+<div class="modal fade" id="updateReviewModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">REVIEW</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> Previous Rating: @review.Rating</li>
+                        <li class="list-group-item"> Previous Review: @review.ReviewText</li>
+                        <li class="list-group-item"></li>
+                    </ul>
+                </div>
+                <form asp-controller="User" asp-action="DeleteReview">
+                    <div class="form-group mb-3">
+                        <input asp-for="UserId" value="@currentUser.UserId" type="hidden" />
+                        <input asp-for="MovieId" value="@Model.MovieId" type="hidden" />
+                        <input asp-for="Rating" value="@Model.Rating" type="hidden" />
+                        <input asp-for="ReviewText" value="@Model.ReviewText" type="hidden" />
+                    </div>
+                    <div class="form-group text-end">
+                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"> Delete </button>
+                    </div>
+                </form>
+
+                <form asp-controller="User" asp-action="UpdateReview">
+                    <input asp-for="UserId" value="@currentUser.UserId" type="hidden" />
+                    <input asp-for="MovieId" value="@Model.MovieId" type="hidden" />
+                    <label asp-for="@Model.Rating" for="reviewRating" class="form-label"> Update your score </label>
+                    <select asp-for="@Model.Rating" id="reviewRating" class="custom-select my-1 mr-sm-2" required>
+                        <option selected>Choose...</option>
+                        @for (int i = 1; i < 11; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                <div class="form-group mb-3">
+                    <label asp-for="@Model.ReviewText" for="reviewText" class="col-form-label">Review:</label>
+                    <textarea asp-for="@Model.ReviewText" id="reviewText" class="form-control"></textarea>
+                    <span asp-validation-for="@Model.ReviewText" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-end">
+
+                    <button type="submit" class="btn btn-secondary"> Update </button>
+                </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

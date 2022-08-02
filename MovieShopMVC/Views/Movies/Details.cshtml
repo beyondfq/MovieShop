@@ -32,47 +32,88 @@
             <div class="col" align="right">
                 <br><br><br><br>
                 <div class="row" style="margin-left:15px;margin-right:15px">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z" />
-                            <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z" />
-                        </svg> REVIEW
-                    </button>
-
                     @{
                         ReviewRequestModel reviewRequest = new ReviewRequestModel
-                        {
-                            MovieId = Model.Id,
-                        };
+                            {
+                                MovieId = Model.Id,
+                            };
                     }
-                    @*<partial name="_ReviewPartial" model="@reviewRequest" />*@
+                    @if (currentUser.IsAuthenticated)
+                    {
+                        @if (await reviewRepository.CheckIfReviewExists(currentUser.UserId, Model.Id))
+                        {
+                            <!-- Update Review Button trigger modal -->
+                            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#updateReviewModal" data-backdrop="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z" />
+                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z" />
+                                </svg> EDIT REVIEW
+                            </button>
+                        }
+                        else
+                        {
+                            <!-- Add Review Button trigger modal -->
+                            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#addReviewModal" data-backdrop="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z" />
+                                    <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z" />
+                                </svg> REVIEW
+                            </button>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" type="button" class="btn btn-outline-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z" />
+                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z" />
+                            </svg> REVIEW
+                        </a>
+                    }
 
                 </div>
                 <br>
                 <div class="row" style="margin-left:15px;margin-right:15px">
-                    @if (await purchaseRepository.CheckIfPurchaseExists(currentUser.UserId, Model.Id))
+                    @if (currentUser.IsAuthenticated)
                     {
-                        <button type="button" class="btn btn-light">WATCH MOVIE</button>
+                        @if (await purchaseRepository.CheckIfPurchaseExists(currentUser.UserId, Model.Id))
+                        {
+                            <button type="button" class="btn btn-light">WATCH MOVIE</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#purchaseModal">BUY $@Model.Price</button>
+                        }
                     }
                     else
                     {
-                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#purchaseModal">BUY $@Model.Price</button>
+                        <a asp-controller="Account" asp-action="Login" type="button" class="btn btn-light">BUY $@Model.Price</a>
                     }
                 </div>
                 <br>
                 <div class="row" style="margin-left:15px;margin-right:15px">
-                    @if (await favoriteRepository.CheckIfFavoriteExists(currentUser.UserId, Model.Id))
+                    @if (currentUser.IsAuthenticated)
                     {
-                        <a asp-controller="User" asp-action="RemoveFavorite" asp-route-movieId="@Model.Id" class="btn btn-light" role="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-                                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
-                            </svg>
-                        </a>
+                        @if (await favoriteRepository.CheckIfFavoriteExists(currentUser.UserId, Model.Id))
+                        {
+                            <a asp-controller="User" asp-action="RemoveFavorite" asp-route-movieId="@Model.Id" class="btn btn-light" role="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                    <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
+                                </svg>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="User" asp-action="FavoriteMovie" asp-route-movieId="@Model.Id" class="btn btn-light" role="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+                                    <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
+                                </svg> FAVORITE
+                            </a>
+                        }
                     }
                     else
                     {
-                        <a asp-controller="User" asp-action="FavoriteMovie" asp-route-movieId="@Model.Id" class="btn btn-light" role="button">
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-light" role="button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
                                 <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
                             </svg> FAVORITE
@@ -187,41 +228,19 @@
     </div>
 </div>
 
+ @if (await reviewRepository.CheckIfReviewExists(currentUser.UserId, Model.Id))
+{
+    <partial name="_UpdateReviewPartial" model="@reviewRequest"/>
+}
+else
+{
+    <partial name="_AddReviewPartial" model="@reviewRequest"/>
+
+}
 
 
-<!-- Modal REVIEW-->
-<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reviewModalLabel">REVIEW</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form asp-controller="User" asp-action="AddReview" class="form-inline">
-                    <label asp-for="@reviewRequest.Rating" class="my-1 mr-2" for="inlineFormCustomSelectPref"> Choose your score </label>
-                    <select asp-for="@reviewRequest.Rating" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                        <option selected>Choose...</option>
-                        @for (int i = 1; i < 11; i++)
-                        {
-                            <option value="@i">@i</option>
-                        }
-                    </select>
-                </form>
-                <form>
-                    <div class="mb-3">
-                        <label asp-for="@reviewRequest.ReviewText" class="col-form-label">Review:</label>
-                        <textarea asp-for="@reviewRequest.ReviewText" class="form-control" id="message-text"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a class="btn btn-primary" role="button">Submit</a>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 
 
 

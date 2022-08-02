@@ -95,36 +95,39 @@ namespace MovieShopMVC.Controllers
             return RedirectToAction("Details", "Movies", new { id = movieId });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AddReview(int movieId)
+        [HttpPost]
+        public async Task<IActionResult> AddReview(ReviewRequestModel model)
         {
-            var userId = _currentUser.UserId;
-            var review = await _userService.GetReview(userId, movieId);
-            ReviewRequestModel model = new ReviewRequestModel
-            {
-                MovieId = movieId,
-                UserId = userId,
-                Rating = review.Rating,
-                ReviewText = review.ReviewText
-            };
-
-            if (review.UserId == 0)
-            {
-                await _userService.AddMovieReview(model);
-            }
-            else
-            {
-                await _userService.UpdateMovieReview(model);
-            }
-
-            return RedirectToAction("Details", "Movies", new { movieId });
+            await _userService.AddMovieReview(model);
+            return RedirectToAction("Details", "Movies", new { id = model.MovieId });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> DeleteReview(ReviewRequestModel model)
         {
             await _userService.DeleteMovieReview(model);
             return RedirectToAction("Details", "Movies", new {id = model.MovieId});
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateReview(int movieId)
+        {
+            var oldReview = await _userService.GetReview(_currentUser.UserId, movieId);
+            ReviewRequestModel model = new ReviewRequestModel
+            {
+                MovieId = movieId,
+                UserId = oldReview.UserId,
+                Rating = oldReview.Rating,
+                ReviewText = oldReview.ReviewText
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateReview(ReviewRequestModel model)
+        {
+            await _userService.UpdateMovieReview(model);
+            return RedirectToAction("Details", "Movies", new { id = model.MovieId });
         }
 
     }

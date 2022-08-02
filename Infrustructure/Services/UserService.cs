@@ -120,7 +120,7 @@ namespace Infrastructure.Services
 
         public async Task<bool> DeleteMovieReview(ReviewRequestModel reviewRequest)
         {
-            var review = await _reviewRepository.GetById(reviewRequest.MovieId, reviewRequest.UserId);
+            var review = await _reviewRepository.GetById(reviewRequest.UserId, reviewRequest.MovieId);
             await _reviewRepository.ReviewRemove(review);
             return true;
         }
@@ -148,14 +148,12 @@ namespace Infrastructure.Services
         public async Task<ReviewModel> GetReview(int userId, int movieId)
         {
             var review = await _reviewRepository.GetById(userId, movieId);
-
             var model = new ReviewModel
             {
-                MovieId = review.MovieId,
-                UserId = review.UserId,
+                MovieId = movieId,
+                UserId = userId,
                 Rating = review.Rating,
-                ReviewText = review.ReviewText,
-                CreatedDate = review.CreatedDate
+                ReviewText = review.ReviewText
             };
 
             return model;
