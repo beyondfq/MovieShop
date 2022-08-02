@@ -229,8 +229,11 @@
 </div>
 
 
+
+
 @if (currentUser.IsAuthenticated)
 {
+    <!-- Modal REVIEW -->
     @if (await reviewRepository.CheckIfReviewExists(currentUser.UserId, Model.Id))
     {
         <partial name="_UpdateReviewPartial" model="@reviewRequest" />

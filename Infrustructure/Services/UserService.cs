@@ -101,9 +101,18 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
-        public Task<PurchaseModel> GetPurchasesDetails(int userId, int movieId)
+        public async Task<PurchaseModel> GetPurchasesDetails(int userId, int movieId)
         {
-            throw new NotImplementedException();
+            var purchase = await _purchaseRepository.FindMovieByUserId(movieId, userId);
+            var purchaseDetails = new PurchaseModel
+            {
+                MovieId = movieId,
+                UserId = userId,
+                TotalPrice = purchase.TotalPrice,
+                PurchaseDateTime = purchase.PurchaseDateTime,
+                PurchaseNumber = purchase.PurchaseNumber
+            };
+            return purchaseDetails;
         }
 
 

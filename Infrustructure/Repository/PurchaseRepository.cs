@@ -41,5 +41,13 @@ namespace Infrastructure.Repository
                 .ToListAsync();
             return purchase;
         }
+
+        public async Task<Purchase> FindMovieByUserId(int movieId, int userId)
+        {
+            var purchase = await _movieShopDbContext.Purchases
+                .Where(p => p.UserId == userId && p.MovieId == movieId)
+                .Include(p => p.Movie).FirstOrDefaultAsync();
+            return purchase;
+        }
     }
 }
