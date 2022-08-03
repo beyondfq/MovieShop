@@ -90,5 +90,16 @@ namespace Infrastructure.Services
             }
             return null;
         }
+
+        public async Task<UserEmailModel> CheckEmail(string email)
+        {
+            var userEmail = await _UserRepository.GetUserByEmail(email);
+            if (userEmail == null)
+            {
+                return null;
+            }
+
+            return new UserEmailModel { emailExist = email};
+        }
     }
 }

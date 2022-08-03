@@ -23,6 +23,20 @@ namespace MovieShopAPI.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet]
+        [Route("check-email")]
+        public async Task<IActionResult> CheckEmail(string email)
+        {
+            var emailExsit = await _accountService.CheckEmail(email);
+            if(emailExsit == null)
+            {
+                return NotFound("Not found");
+            }
+
+            return Ok("true");
+        }
+
+
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
