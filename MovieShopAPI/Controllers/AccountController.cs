@@ -43,7 +43,8 @@ namespace MovieShopAPI.Controllers
                 return Ok(new { token = jwtToken });
             }
 
-            return Unauthorized(new { errorMessage = "Please check email and password" });
+            throw new UnauthorizedAccessException("Please check email and password");
+            //return Unauthorized(new { errorMessage = "Please check email and password" });
 
         }
 
