@@ -32,6 +32,13 @@ namespace Infrastructure.Services
             return false;
         }
 
+        public async Task<bool> IsMovieFavorite(FavoriteRequestModel favoriteRequest, int userId)
+        {
+            if (await _favoriteRepository.CheckIfFavoriteExists(userId, favoriteRequest.MovieId))
+                return true;
+            return false;
+        }
+
         public async Task<bool> AddMovieReview(ReviewRequestModel reviewRequest)
         {
             var newReview = new Review
