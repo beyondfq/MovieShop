@@ -24,5 +24,6 @@ namespace ApplicationCore.Contracts.Services
         Task<List<ReviewModel>> GetAllReviewsByUser(int id);
         Task<ReviewModel> GetReview(int userId, int movieId);
         Task<bool> IsMovieFavorite(FavoriteRequestModel favoriteRequest, int userId);
+        Task<UserProfileResponseModel> GetUserDetailsById(int id);
     }
 }

@@ -21,6 +21,18 @@ namespace MovieShopAPI.Controllers
             _currentUser = currentUser;
         }
 
+        [HttpGet]
+        [Route("details/{id:int}")]
+        public async Task<IActionResult> GetUserDetailsById(int id)
+        {
+            var details = await _userService.GetUserDetailsById(id);
+            if(details == null)
+            {
+                return NotFound("No User Found");
+            }
+            return Ok(details);
+        }
+
         //---------------------------------- Purchase --------------------------------------
 
         [HttpGet]

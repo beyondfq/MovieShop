@@ -177,5 +177,27 @@ namespace Infrastructure.Services
             return model;
         }
 
+        public async Task<UserProfileResponseModel> GetUserDetailsById(int id)
+        {
+            var userDetails = await _userRepository.GetUserById(id);
+            if (userDetails == null)
+            {
+                throw new Exception("This user is not exsit");
+            }
+
+            var model = new UserProfileResponseModel
+            {
+                id = userDetails.Id,
+                email = userDetails.Email,
+                firstName = userDetails.FirstName,
+                lastName = userDetails.LastName,
+                dateOfBirth = userDetails.DateOfBirth,
+                phoneNumber = userDetails.PhoneNumber,
+                profilePictureUrl = userDetails.ProfilePictureUrl,
+                //roles
+            };
+
+            return model;
+        }
     }
 }
