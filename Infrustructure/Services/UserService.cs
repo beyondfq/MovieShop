@@ -104,6 +104,8 @@ namespace Infrastructure.Services
         public async Task<PurchaseModel> GetPurchasesDetails(int userId, int movieId)
         {
             var purchase = await _purchaseRepository.FindMovieByUserId(movieId, userId);
+            if (purchase == null)
+                return null;
             var purchaseDetails = new PurchaseModel
             {
                 MovieId = movieId,

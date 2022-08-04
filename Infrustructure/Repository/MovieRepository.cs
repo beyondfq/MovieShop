@@ -27,6 +27,9 @@ namespace Infrastructure.Repository
                 .Include(m => m.CastsOfMovie).ThenInclude(m => m.Cast)
                 .Include(m => m.Trailers)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var rating = await _movieShopDbContext.Reviews.Where(r => r.MovieId == id).DefaultIfEmpty().AverageAsync(r => r==null ? 0 : r.Rating);
+
             return movieDetails;
         }
 
@@ -53,6 +56,29 @@ namespace Infrastructure.Repository
             return pagedMovies;
         }
 
+        public async Task<PagedResultSet<Movie>> GetMoviesByTitlePagination(int pageSize, int page, string title)
+        {
+            // get total row count
+            var totalMoviesCountOfTitle = await _movieShopDbContext.Movies.Where(t => t.Title.Contains(title)).CountAsync();
+            if (totalMoviesCountOfTitle == 0)
+            {
+                throw new Exception("No Movies found");
+            }
+
+            // get the actual data
+            var movies = await _movieShopDbContext.Movies.Where(t => t.Title.Contains(title)).OrderByDescending(m => m.Revenue)
+                .Select(m => new Movie
+                {
+                    Id = m.Id,
+                    PosterUrl = m.PosterUrl,
+                    Title = m.Title
+                })
+                .Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var pagedMovies = new PagedResultSet<Movie>(movies, page, pageSize, totalMoviesCountOfTitle);
+            return pagedMovies;
+        }
+
         public async Task<List<Movie>> GetTop30HighestRevenueMovies()
         {
             // call the database with EF Core and get the data
@@ -60,7 +86,8 @@ namespace Infrastructure.Repository
             // select top 30 * from Movies order by Revenue
             // corresponding LINQ Query
 
-            var movies = await _movieShopDbContext.Movies.OrderByDescending(m => m.Revenue)
+            var movies = await _movieShopDbContext.Movies
+                .OrderByDescending(m => m.Revenue)
                 .Select(m => new Movie { Id = m.Id, Title = m.Title, PosterUrl = m.PosterUrl })
                 .Take(30).ToListAsync();
             return movies;
@@ -68,7 +95,11 @@ namespace Infrastructure.Repository
 
         public async Task<List<Movie>> GetTop30RatedMovies()
         {
-            throw new NotImplementedException();
+            var movies = await _movieShopDbContext.Movies
+                .OrderByDescending(m => m.Rating)
+                .Select(m => new Movie { Id = m.Id, Title = m.Title, PosterUrl = m.PosterUrl })
+                .Take(30).ToListAsync();
+            return movies;
         }
     }
 }

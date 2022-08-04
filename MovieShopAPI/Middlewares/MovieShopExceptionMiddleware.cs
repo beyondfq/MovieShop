@@ -33,7 +33,7 @@ namespace MovieShopAPI.Middlewares
                     Message = ex.Message, 
                     //StackTrace = ex.StackTrace, 
                     ExceptionDateTime = DateTime.UtcNow,
-                    ExceptionType = ex.GetType().ToString(), 
+                    //ExceptionType = ex.GetType().ToString(), 
                     Path = httpContext.Request.Path, 
                     HttpRequestType = httpContext.Request.Method, 
                     User = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : null
