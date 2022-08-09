@@ -1,4 +1,6 @@
 ﻿using ApplicationCore.Contracts.Services;
+using ApplicationCore.Entities;
+using ApplicationCore.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +27,20 @@ namespace MovieShopAPI.Controllers
             }
 
             return Ok(genres);
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> AddGenre([FromBody] GenreModel genre)
+        {
+            GenreModel model = new GenreModel
+            {
+                Id = genre.Id,
+                Name = genre.Name
+            };
+
+            var addedGenre = await _genreService.AddGenre(model);
+            return Ok(addedGenre);
         }
     }
 }

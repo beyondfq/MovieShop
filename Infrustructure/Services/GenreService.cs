@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Contracts.Repository;
 using ApplicationCore.Contracts.Services;
+using ApplicationCore.Entities;
 using ApplicationCore.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,22 @@ namespace Infrastructure.Services
         public GenreService(IGenreRepository genreRepository)
         {
             _genreRepository = genreRepository;
+        }
+
+        public async Task<bool> AddGenre(GenreModel genre)
+        {
+            var newGenre = new Genre
+            {
+                Name = genre.Name,
+                Id = genre.Id
+            };
+            var addedGenre = await _genreRepository.Add(newGenre);
+            if (addedGenre.Id > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<List<GenreModel>> GetAllGenres()

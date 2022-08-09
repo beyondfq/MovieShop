@@ -71,3 +71,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+app.UseCors(policy => {
+    policy.WithOrigins("Insert Angular SPA URL Here").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+});

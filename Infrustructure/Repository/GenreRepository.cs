@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
+using ApplicationCore.Models;
 
 namespace Infrastructure.Repository
 {
@@ -17,6 +18,14 @@ namespace Infrastructure.Repository
         public GenreRepository(MovieShopDbContext movieShopDbContext)
         {
             _movieShopDbContext = movieShopDbContext;
+        }
+
+        public async Task<Genre> Add(Genre genre)
+        {
+
+            _movieShopDbContext.Genres.Add(genre);
+            await _movieShopDbContext.SaveChangesAsync();
+            return genre;
         }
 
         public async Task<List<Genre>> GetAllGenres()
